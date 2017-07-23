@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26711.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactivePlayground", "ReactivePlayground\ReactivePlayground.csproj", "{C7BFC897-2E4F-405E-9980-73CCBC6C839B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C7BFC897-2E4F-405E-9980-73CCBC6C839B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7BFC897-2E4F-405E-9980-73CCBC6C839B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7BFC897-2E4F-405E-9980-73CCBC6C839B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7BFC897-2E4F-405E-9980-73CCBC6C839B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FD815717-C7C0-4D48-ACE1-DED34C285A71}
+	EndGlobalSection
+EndGlobal
