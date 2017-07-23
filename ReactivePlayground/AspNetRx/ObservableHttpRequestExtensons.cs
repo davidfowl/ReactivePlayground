@@ -13,22 +13,30 @@ namespace ReactivePlayground.AspNetRx
     {
         public static IObservable<ArraySegment<byte>> Body(this HttpRequest httpRequest)
         {
-            // TODO: Store this in a feature
-            return Observable.Create<ArraySegment<byte>>(async (observer, token) =>
+            var feature = httpRequest.HttpContext.Features.Get<HttpReactiveRequestBodyFeature>();
+            if (feature == null)
             {
-                try
+                feature = new HttpReactiveRequestBodyFeature();
+                feature.RequestBody = Observable.Create<ArraySegment<byte>>(async (observer, token) =>
                 {
-                    await httpRequest.Body.CopyToAsync(new ObserverStream(observer), 4096, token);
-                }
-                catch (Exception ex)
-                {
-                    observer.OnError(ex);
-                }
-                finally
-                {
-                    observer.OnCompleted();
-                }
-            });
+                    try
+                    {
+                        await httpRequest.Body.CopyToAsync(new ObserverStream(observer), 4096, token);
+                    }
+                    catch (Exception ex)
+                    {
+                        observer.OnError(ex);
+                    }
+                    finally
+                    {
+                        observer.OnCompleted();
+                    }
+                });
+
+                httpRequest.HttpContext.Features.Set(feature);
+            }
+
+            return feature.RequestBody;
         }
 
         // Stream that pushes via the observer
