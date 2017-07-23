@@ -14,7 +14,6 @@ namespace ReactivePlayground.AspNetRx
             if (feature == null)
             {
                 feature = new HttpReactiveResponseBodyFeature();
-                // TODO: Store in a feature
                 var task = Task.CompletedTask;
                 feature.ResponseBody = Observer.Create<object>(async data =>
                 {
