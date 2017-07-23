@@ -6,11 +6,23 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 
 namespace ReactivePlayground.AspNetRx
 {
     public static class ObservableHttpRequestExtensons
     {
+        public static IObservable<IFormCollection> Form(this HttpRequest httpRequest)
+        {
+            return Observable.FromAsync((token) => httpRequest.ReadFormAsync(token));
+        }
+
+        public static IObservable<KeyValuePair<string, StringValues>> FormValues(this HttpRequest httpRequest)
+        {
+            return httpRequest.Form()
+                     .SelectMany(form => form);
+        }
+
         public static IObservable<ArraySegment<byte>> Body(this HttpRequest httpRequest)
         {
             var feature = httpRequest.HttpContext.Features.Get<HttpReactiveRequestBodyFeature>();
