@@ -17,7 +17,7 @@ namespace ReactivePlayground.AspNetRx
                 var task = Task.CompletedTask;
                 feature.ResponseBody = Observer.Create<ArraySegment<byte>>(async buffer =>
                 {
-                    // Implicit task queue to make sure we don't do overlappning operations
+                    // Implicit task queue to make sure we don't do overlapping operations
                     await task;
                     task = httpResponse.Body.WriteAsync(buffer.Array, buffer.Offset, buffer.Count);
                 });
@@ -35,7 +35,7 @@ namespace ReactivePlayground.AspNetRx
 
         public static void OnCompleted(this HttpResponse httpResponse, Func<object, IObservable<Unit>> callback, object state)
         {
-            httpResponse.OnCompleted(async (s) => await callback(s), state);
+            httpResponse.OnCompleted(async s => await callback(s), state);
         }
     }
 }
