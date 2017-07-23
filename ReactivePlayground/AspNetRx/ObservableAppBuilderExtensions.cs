@@ -13,16 +13,7 @@ namespace ReactivePlayground.AspNetRx
 {
     public static class ObservableAppBuilderExtensions
     {
-        public static void Run<T>(this IApplicationBuilder app, Func<HttpContext, IObserver<T>> requestDelegate)
-        {
-            app.Run(context =>
-            {
-                requestDelegate(context).OnCompleted();
-                return Task.CompletedTask;
-            });
-        }
-
-        public static void Run(this IApplicationBuilder app, ObservableRequestDelegate requestDelegate)
+        public static void Run<T>(this IApplicationBuilder app, Func<HttpContext, IObservable<T>> requestDelegate)
         {
             app.Run(async context =>
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -26,14 +27,13 @@ namespace ReactivePlayground
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.Run(context =>
             {
                 var body = context.Response.Body();
 
                 body.OnNext("Hello World");
 
-                return body;
+                return Observable.Return(Unit.Default);
             });
         }
     }
