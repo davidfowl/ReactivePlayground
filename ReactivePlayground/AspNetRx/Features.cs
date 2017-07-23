@@ -12,6 +12,6 @@ namespace ReactivePlayground.AspNetRx
 
     public class HttpReactiveResponseBodyFeature
     {
-        public IObserver<object> ResponseBody { get; set; }
+        public IObserver<ArraySegment<byte>> ResponseBody { get; set; }
     }
 }

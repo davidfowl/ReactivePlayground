@@ -8,32 +8,18 @@ namespace ReactivePlayground.AspNetRx
 {
     public static class ObservableHttpResponseExtensons
     {
-        public static IObserver<object> Body(this HttpResponse httpResponse)
+        public static IObserver<ArraySegment<byte>> Body(this HttpResponse httpResponse)
         {
             var feature = httpResponse.HttpContext.Features.Get<HttpReactiveResponseBodyFeature>();
             if (feature == null)
             {
                 feature = new HttpReactiveResponseBodyFeature();
                 var task = Task.CompletedTask;
-                feature.ResponseBody = Observer.Create<object>(async data =>
+                feature.ResponseBody = Observer.Create<ArraySegment<byte>>(async buffer =>
                 {
                     // Implicit task queue to make sure we don't do overlappning operations
                     await task;
-
-                    switch (data)
-                    {
-                        case string value:
-                            task = httpResponse.WriteAsync(value);
-                            break;
-                        case byte[] buffer:
-                            task = httpResponse.Body.WriteAsync(buffer, 0, buffer.Length);
-                            break;
-                        case ArraySegment<byte> buffer:
-                            task = httpResponse.Body.WriteAsync(buffer.Array, buffer.Offset, buffer.Count);
-                            break;
-                        default:
-                            break;
-                    }
+                    task = httpResponse.Body.WriteAsync(buffer.Array, buffer.Offset, buffer.Count);
                 });
 
                 httpResponse.HttpContext.Features.Set(feature);
